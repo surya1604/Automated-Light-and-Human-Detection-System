@@ -1,0 +1,158 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #222;
+    border-radius: 10px;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+.container 
+{
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 40px); /* Subtracting navbar height */
+}
+.left-section 
+{
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #000; /* Yellow background */
+}
+.right-section 
+{
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #222; /* Grey background */
+}
+
+.bulb
+{
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background: #444;
+    border-radius: 50%;
+    z-index: 1;
+    
+}
+.on .right-section .bulb
+{
+    background: #ff0;
+}
+.bulb::before
+{
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 22.5px;
+    width: 35px;
+    height: 36px;
+    background: #444;
+    border-top: 30px solid #000;
+    border-radius: 10px;
+}
+.on .right-section .bulb::before
+{
+    background: #ff0;
+}
+.on .right-section .bulb::after
+{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(#ff0, #f80);
+    border-radius: 50%;
+    filter: blur(40px);
+}
+.wire
+{
+    position: absolute;
+    left: calc(80% - 9px);
+    top: 7.7vh;
+    width: 4px;
+    height: 40vh;
+    background: #000;
+    z-index: 1;
+}
+.switch
+{
+    position: relative;
+    bottom: -8px;
+    left: 50px;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(#eee, #ccc, #eee);
+    border: 3px solid #000;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+}
+.switch .btn
+{
+    position: relative;
+    width: 25px;
+    height: 40px;
+    background: linear-gradient(#777 #fff #777c);
+    border-radius: 6px;
+    border: 2px solid #000;
+    cursor: pointer;
+}
+.switch .btn::before
+{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 85%;  /*85+15 = 100*/
+    background: linear-gradient(#fff, #fff);
+    border-radius: 4px;
+}
+.on .switch .btn::before
+{
+    top: 15%;  /*85+15 = 100*/
+}
+
+.on .bulb {
+    background: #ff0;
+    animation: glow 1s infinite alternate;
+} 
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 150px #ff0, 0 0 250px #ff0, 0 0 350px #ff0, 
+                    0 0 60px #ff0, 0 0 70px #ff0, 0 0 80px #ff0; /* Adjust the box-shadow here */
+    } 
+    to {
+        box-shadow: 0 0 40px #f80, 0 0 50px #f80, 0 0 80px #f80,
+                    0 0 80px #f80, 0 0 100px #f80, 0 0 120px #f80; /* Adjust the box-shadow here */
+    }
+}
