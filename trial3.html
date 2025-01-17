@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human and Person Detection Using YOLO</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='trialstyle1.css') }}">
+    <style>
+        /* Add the styles from the second file here */
+        body {
+            color: white;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        header.feature-box.top {
+            background-color: black;
+            height: 100px;
+            margin: 0px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header.feature-box.second {
+            background-color: blue;
+            height: 50px;
+            text-align: center;
+            margin-top: -25px;
+        }
+
+        .features {
+            background-color: black;
+            width: 900px;
+            height: 700px;
+            border-radius: 35px;
+            object-fit: contain;
+            margin: 20px;
+        }
+
+        section.col-sm {
+            background-color: black;
+            width: 1000px;
+            height: 650px;
+            border-radius: 35px;
+            object-fit: contain;
+            margin: 40px;
+        }
+
+        img {
+            width: 650px;
+            height: 500px;
+            border-radius: 35px;
+            object-fit: contain;
+            margin: 40px;
+        }
+
+        .new {
+            color: black;
+            margin: 0px;
+            padding: 10px;
+            background-color: green;
+            margin: 0px;
+            margin-top: -10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <h1>Human Detection Using YOLO</h1>
+    </div>
+    <div class="container">
+        <div class="left-section">
+            <section class="col-sm">
+                <img src="{{ url_for('video_feed') }}" alt="Upload video">
+            </section>
+        </div>
+        <div class="right-section">
+            <div class="light {% if person_detected %}on{% endif %}">
+                <div class="wire"></div>
+                <div class="bulb">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p id="detection_status"></p>
+    <script>
+        // Connect to server-sent events endpoint
+        var detectionStatus = document.getElementById("detection_status");
+        let body = document.querySelector('body');
+
+        var eventSource = new EventSource("/detection_status");
+        var toggleBulb = 0
+
+        eventSource.onmessage = function(event) {
+            detectionStatus.innerText = event.data.toString();
+            if (event.data.toString() == "True" && toggleBulb == 0) {
+                body.classList.toggle('on');
+                toggleBulb = 1
+            } else if (event.data.toString() == "False" && toggleBulb == 1) {
+                body.classList.toggle('on');
+                toggleBulb = 0
+            } 
+        };
+    </script>
+</body>
+
+</html>
+
